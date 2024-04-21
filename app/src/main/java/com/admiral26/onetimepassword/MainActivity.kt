@@ -27,8 +27,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         etOtp = findViewById(R.id.input_text)
-
-
         try {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                 SmsRetriever.getClient(this).startSmsUserConsent(null)
@@ -60,12 +58,8 @@ class MainActivity : AppCompatActivity() {
         @SuppressLint("UnsafeIntentLaunch")
         override fun onReceive(context: Context, intent: Intent) {
             if (SmsRetriever.SMS_RETRIEVED_ACTION == intent.action) {
-                val extras = intent.extras
-
-                val smsRetrieverStatus = extras ?: return
-
+                val smsRetrieverStatus = intent.extras ?: return
                 when (smsRetrieverStatus.getInt(SmsRetriever.EXTRA_STATUS)) {
-
                     CommonStatusCodes.SUCCESS -> {
                         val consentIntent =
                             intent.getParcelableSafe<Intent>(SmsRetriever.EXTRA_CONSENT_INTENT)
@@ -83,7 +77,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
     val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
